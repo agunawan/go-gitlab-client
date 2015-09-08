@@ -126,9 +126,11 @@ func (g *Gitlab) buildAndExecRequestRaw(method, url, opaque string, body []byte)
 	if body != nil {
 		reader := bytes.NewReader(body)
 		req, err = http.NewRequest(method, url, reader)
+		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	} else {
 		req, err = http.NewRequest(method, url, nil)
 	}
+
 	if err != nil {
 		panic("Error while building gitlab request")
 	}
@@ -148,7 +150,7 @@ func (g *Gitlab) buildAndExecRequestRaw(method, url, opaque string, body []byte)
 	}
 
 	if resp.StatusCode >= 400 {
-		err = fmt.Errorf("*Gitlab.buildAndExecRequestRaw failed: <%d> %s", resp.StatusCode, req.URL)
+		err = fmt.Errorf("*Gitlab.buildAndExecRequestRaw failed: <%d> %s %s", resp.StatusCode, req.URL, string(contents))
 	}
 
 	return contents, err
