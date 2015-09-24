@@ -100,6 +100,24 @@ func (g *Gitlab) buildAndExecRequest(method, url string, body []byte) ([]byte, e
 	return contents, err
 }
 
+func (g *Gitlab) TokenlessResourceUrlRaw(u string, params map[string]string) (string, string) {
+
+	if params != nil {
+		for key, val := range params {
+			u = strings.Replace(u, key, val, -1)
+		}
+	}
+
+	path := u
+	u = g.BaseUrl + g.ApiPath + path
+	p, err := url.Parse(u)
+	if err != nil {
+		return u, ""
+	}
+	opaque := "//" + p.Host + g.ApiPath + path
+	return u, opaque
+}
+
 func (g *Gitlab) ResourceUrlRaw(u string, params map[string]string) (string, string) {
 
 	if params != nil {
