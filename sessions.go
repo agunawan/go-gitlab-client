@@ -48,7 +48,9 @@ func (g *Gitlab) NewSession(login, email, password string) (*Session, error) {
 
 	v := url.Values{}
 	v.Set("login", login)
-	v.Set("email", email)
+	if login == "" {
+		v.Set("email", email)
+	}
 	v.Set("password", password)
 
 	body := v.Encode()
