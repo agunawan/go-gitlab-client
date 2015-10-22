@@ -11,7 +11,7 @@ const (
 )
 
 type CommitResponse struct {
-	File_Name   string
+	File_Path   string
 	Branch_Name string
 }
 

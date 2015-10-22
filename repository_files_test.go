@@ -10,7 +10,7 @@ func TestCreateFile(t *testing.T) {
 	response, err := gitlab.CreateFile("1", "file", "branch", "text", "content", "message")
 
 	assert.Equal(t, err, nil)
-	assert.Equal(t, response.File_Name, "app/post.rb")
+	assert.Equal(t, response.File_Path, "app/post.rb")
 	defer ts.Close()
 }
 
@@ -19,6 +19,6 @@ func TestUpdateFile(t *testing.T) {
 	response, err := gitlab.UpdateFile("1", "file", "branch", "text", "content", "message")
 
 	assert.Equal(t, err, nil)
-	assert.Equal(t, response.File_Name, "app/put.rb")
+	assert.Equal(t, response.File_Path, "app/put.rb")
 	defer ts.Close()
 }
